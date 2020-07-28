@@ -20,6 +20,7 @@ const con = mysql.createConnection({
     console.log("Connected!");
 
     const sql = "CREATE TABLE favorites (id VARCHAR(255), quote VARCHAR(255), author VARCHAR(255))";
+    const sqlOfDay = "CREATE TABLE quoteOfDay (id INT PRIMARY KEY AUTO_INCERMENT, id VARCHAR(255), quote VARCHAR(255), author VARCHAR(255))";
     
     // const sql = "CREATE TABLE users (id int PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), password VARCHAR(255))";
     
@@ -32,8 +33,19 @@ const con = mysql.createConnection({
 
 
 
-app.get('/', () => {
+app.get('/fav', (req, res) => {
     console.log('Get request worked!');
+     let queryStr = "SELECT * FROM favorites";
+    con.query(queryStr, function (err, results) {
+      if (err)  {
+    res.status(404);
+        console.log(err);
+      } else {
+        console.log(results);
+        res.status(200);
+        res.send(results);
+      }
+    });
 });
 
 app.post('/post', (req, res) => {
@@ -56,6 +68,48 @@ app.post('/post', (req, res) => {
  
  
 });
+
+
+//PUT
+app.put('/quoteOfDay', (req, res) => {
+    console.log('Get post worked!');
+    console.log(req.body);
+    let queryStr = `INSERT INTO favorites (id, quote, author) VALUES ('${req.body._id}', "${req.body.quote}", '${req.body.quoteAuthor}')`;
+      con.query(queryStr, function (err, results) {
+        if (err)  {
+      res.status(404);
+          console.log(err);
+        } else {
+          console.log(results);
+          res.status(201);
+        }
+      });
+    })
+//DELETE
+      app.delete('/delete', (req, res) => {
+        console.log('DELETE REQUEST worked!');
+        console.log(req.body, 99);
+        let queryStr = `DELETE FROM favorites WHERE id='${req.body.id}'`;
+          con.query(queryStr, function (err, results) {
+            if (err)  {
+          res.status(404);
+              console.log(err);
+            } else {
+              console.log(results, 888);
+              res.status(201);
+            }
+          });
+
+
+    res.status(201)
+    res.send('Post request was successful')
+ 
+ 
+});
+
+
+
+
 
 
 app.listen(PORT, () => {

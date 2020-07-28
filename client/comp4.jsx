@@ -8,14 +8,34 @@ class Fav extends Component {
   }
 
   render() {
-      const {showFavList} = this.props;
-      return(
-    <div>
-        <button onClick={showFavList}>Show Favorite List</button>
-    </div>
-      )
-//     if (this.props.quote !== null) 
-}
+    const { showFavList, favList, makeQuoteOfDay, deleteQuote } = this.props;
+    if (favList !== null) {
+      const reversedArr = favList.reverse();
+      return (
+        <div>
+          {reversedArr.map((obj) => {
+            return (
+              <div class="favDivs">
+                <p>{obj.quote}</p>
+                <p id="author">Quote by: {obj.author}</p>
+                <button
+                  onClick={() => {
+                    makeQuoteOfDay(obj);
+                  }}
+                >
+                  MakeQuouteOfDay
+                </button><button onClick={() => {
+                
+                    deleteQuote(obj);
+                  }}>Delete</button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+    return <div></div>;
+  }
 }
 
 export default Fav;

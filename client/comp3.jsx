@@ -8,21 +8,20 @@ class Search2 extends Component {
   }
 
   render() {
-    const {saveToFav} = this.props;
+    const { saveToFav } = this.props;
     if (this.props.quote !== null) {
       return (
-        <div id="container">
+        <div id="container" class="favDivs">
           <p>{this.props.quote}</p>
-          <p id='author'>{this.props.quoteAuthor}</p>
-          <label>
-            Save to favorties!<button onClick={saveToFav}></button>
-          </label>
+          <p id="author">Quote by: {this.props.quoteAuthor}</p>
+
+          <button onClick={saveToFav}>Save to favorties!</button>
+
+          <button onClick={this.props.showFavList}>Show Favorite List!</button>
         </div>
       );
-    }else{
-        return (
-            <div></div>
-        )
+    } else {
+      return <div></div>;
     }
   }
 }
