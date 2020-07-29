@@ -8,7 +8,7 @@ class Fav extends Component {
   }
 
   render() {
-    const { showFavList, favList, makeQuoteOfDay, deleteQuote } = this.props;
+    const { showFavList, favList, makeQuoteOfDay, deleteQuote, updateDay } = this.props;
     if (favList !== null) {
       const reversedArr = favList.reverse();
       return (
@@ -18,16 +18,21 @@ class Fav extends Component {
               <div class="favDivs">
                 <p>{obj.quote}</p>
                 <p id="author">Quote by: {obj.author}</p>
-                <button
+                {/* <button
                   onClick={() => {
                     makeQuoteOfDay(obj);
                   }}
                 >
                   MakeQuouteOfDay
-                </button><button onClick={() => {
-                
-                    deleteQuote(obj);
-                  }}>Delete</button>
+                </button> */}
+                  
+                  <button onClick={()=>{
+                      updateDay(obj)
+                    }}>Update Quote of The Day</button>
+                        <button onClick={() => {
+                        
+                            deleteQuote(obj);
+                          }}>Delete</button>
               </div>
             );
           })}

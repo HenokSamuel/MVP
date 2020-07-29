@@ -11,17 +11,21 @@ class QuoteOfDay extends Component {
     const {saveToFav} = this.props;
     if (this.props.quoteOfDay !== null) {
       return (
-        <div id="container">
+        
+        <div id='qDay'classfavDivs>
+            <h1>Welcome to Quoter</h1>
+            <h2>Quote of The Day</h2>
           <p>{this.props.quoteOfDay.quote}</p>
           <p id='author'>Quote by: {this.props.quoteOfDay.author}</p>
         
-         <button onClick={saveToFav}>Update</button>
+        
 
         </div>
       );
     }else{
         return (
-            <div></div>
+            <div><h1>Welcome to Quoter</h1>
+                <p>You need a Quote of a day to get you through the day!</p></div>
         )
     }
   }

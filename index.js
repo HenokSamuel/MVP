@@ -20,7 +20,7 @@ const con = mysql.createConnection({
     console.log("Connected!");
 
     const sql = "CREATE TABLE favorites (id VARCHAR(255), quote VARCHAR(255), author VARCHAR(255))";
-    const sqlOfDay = "CREATE TABLE quoteOfDay (id INT PRIMARY KEY AUTO_INCERMENT, id VARCHAR(255), quote VARCHAR(255), author VARCHAR(255))";
+    const sqlOfDay = "CREATE TABLE quoteOfDay (_id INT PRIMARY KEY AUTO_INCERMENT, id VARCHAR(255), quote VARCHAR(255), author VARCHAR(255))";
     
     // const sql = "CREATE TABLE users (id int PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), password VARCHAR(255))";
     
@@ -71,19 +71,41 @@ app.post('/post', (req, res) => {
 
 
 //PUT
-app.put('/quoteOfDay', (req, res) => {
+app.post('/postQuoteDay', (req, res) => {
     console.log('Get post worked!');
-    console.log(req.body);
-    let queryStr = `INSERT INTO favorites (id, quote, author) VALUES ('${req.body._id}', "${req.body.quote}", '${req.body.quoteAuthor}')`;
+    
+    console.log(req.body, 77);
+       con.query("DELETE FROM quoteOfDay", (err, results) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.log('success', results)
+        }
+    });
+    let queryStr = `INSERT INTO quoteOfDay  (id, quote, author) VALUES ('${req.body._id}', "${req.body.quoteText}", '${req.body.quoteAuthor}')`;
       con.query(queryStr, function (err, results) {
         if (err)  {
       res.status(404);
           console.log(err);
         } else {
-          console.log(results);
+          console.log(results, 888888);
           res.status(201);
         }
       });
+    //   let qStr = "SELECT * FROM quoteOfDay";
+      console.log(95)
+      con.query("SELECT * FROM quoteOfDay", function (err, results) {
+          console.log
+          if(err){
+              console.log(error, 7777)
+              res.send(err)
+              return
+          }
+
+              console.log(results[0], 'dude');
+              res.send(results[0]);
+          
+        });
     })
 //DELETE
       app.delete('/delete', (req, res) => {
@@ -97,12 +119,41 @@ app.put('/quoteOfDay', (req, res) => {
             } else {
               console.log(results, 888);
               res.status(201);
+              res.send(results);
             }
           });
+        });
 
+//UPDATE
+app.post('/update', (req, res) => {
+    console.log(req.body, 1277777);
 
-    res.status(201)
-    res.send('Post request was successful')
+    let updateStr = `UPDATE quoteOfDay SET id = "${req.body.id}", quote = "${req.body.quote}", author = "${req.body.author}" LIMIT 1`;
+ 
+      con.query(updateStr, function (err, results) {
+        if (err)  {
+      res.status(404);
+          console.log(err);
+        } else {
+          console.log(results, 'henny it worked!');
+          
+         
+        }
+      });
+
+      con.query("SELECT * FROM quoteOfDay", function (err, results) {
+        console.log
+        if(err){
+            console.log(error, 7777)
+            res.send(err)
+            return
+        }
+            console.log(results[0], 'dude');
+      
+            res.send(results[0]);
+        
+      });
+
  
  
 });

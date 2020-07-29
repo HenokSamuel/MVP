@@ -13,7 +13,7 @@ class Random extends Component {
     return (
       <div>
         <label id='header'>Random Quote</label><br/>
-        <button onClick={func}>Click me!!!</button>
+        <button onClick={func}>Find Quote</button>
       </div>
     );
   }
